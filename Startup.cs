@@ -34,6 +34,11 @@ namespace EmployeeManagement
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
+
+                endpoints.MapGet("/xyz", async context =>
+                {
+                    await context.Response.WriteAsync("Hello XYZ");
+                });
             });
         }
     }
