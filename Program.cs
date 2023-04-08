@@ -15,6 +15,11 @@ namespace EmployeeManagement
     //https://github.com/dotnet/aspnetcore/blob/release/2.1/src/DefaultBuilder/src/WebHost.cs
     //ConfigureAppConfiguration --> order in which configuration is read. You can change the default order 
     //or you can add custom configuration source in addition to all these existing configuration sources
+
+    // CreateDefaultBuilder() method sets up a default web host. 
+    // As part of setting up the web host we are also configuring Startup class using .UseStartup<Startup> extension method.
+    // Startup class has 2 methods. ConfigureServices() & Configure()
+    // Configure() sets up a request processing pipeline for our ASP.NET Core Application
     public class Program
     {
         public static void Main(string[] args)

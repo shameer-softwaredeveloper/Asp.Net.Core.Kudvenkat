@@ -45,6 +45,28 @@ namespace EmployeeManagement
         {
         }
 
+        // #10 Middleware in ASP NET Core
+        // Middleware is a piece of software that can handle a HTTP request or response
+        // A given middleware component has very specific purpose. Authentication, error handling, serve static files, etc middlewares
+        // It is these middleware components that we use to setup a request processing pipeline
+        // This pipeline determines how a request is processed
+        // Request pipeline is configured as part of the application startup by Configure() method present in Startup class
+        // A middleware component in ASP.NET Core has access to both incoming request & the outgoing response
+        // A middleware component may process an incoming request and then pass that request to the next piece of middleware in pipeline for further processing
+        // Short Circuiting : A middleware component may handle the incoming request and decide not to call the next piece of middleware in the pipeline
+        // Short Circuiting is often desirable because it avoids unnecessary work. 
+        // For example if the request is for a static file like an image the static files middleware can handle and serve the request and then short circuit rest of the pipeline
+        // A middleware component may also simply ignore the incoming request and then pass the request on to the next piece of middleware for further processing 
+        // Middleware components in the pipeline that determine how a request is processed in ASP.NET Core. 
+        // These middleware components are executed in the order they are added to the pipeline. Care should be taken to add the middleware in the right order. Otherwise the application may not function as expected
+        
+        // Every middleware component in ASP.NET Core has access to both incoming request and outgoing response
+        // A middleware component may simply pass the request to the next piece of middleware in the pipeline
+        // A middleware component may do some processing and then pass the request to next middleware for further processing
+        // A middleware component may handle the request and short-circuit the rest of the pipeline 
+        // A middleware component may process the outgoing response
+        // Middlewares are executed in the order they are added to the pipeline
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
