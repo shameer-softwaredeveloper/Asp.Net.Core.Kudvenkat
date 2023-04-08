@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,8 +68,11 @@ namespace EmployeeManagement
         // A middleware component may process the outgoing response
         // Middlewares are executed in the order they are added to the pipeline
 
+        // Inject ILogger service. using Microsoft.Extensions.Logging;
+        // https://github.com/dotnet/aspnetcore/blob/release/2.1/src/DefaultBuilder/src/WebHost.cs
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -102,24 +106,37 @@ namespace EmployeeManagement
                 });
             });
 
+            // Order of logging request & response (1) -> (5)
             // Call next middlewear
             app.Use(async (context, next) => 
             {
-                await context.Response.WriteAsync("Hello from .Use() middleware 0. No endpoint matching.");
+                //await context.Response.WriteAsync("Hello from .Use() middleware 0. No endpoint matching.");
+                logger.LogInformation("Middlewear 1 incoming request"); // (1)
                 await next();
+                logger.LogInformation("Middlewear 1 outgoing response"); // (5)
+            });
+
+            app.Use(async (context, next) => 
+            {
+                //await context.Response.WriteAsync("Hello from .Use() middleware 0. No endpoint matching.");
+                logger.LogInformation("Middlewear 2 incoming request"); // (2)
+                await next();
+                logger.LogInformation("Middlewear 2 outgoing response"); // (4)
             });
 
             // Terminal middleware -- will not call next middlewear in the pipeline. Pipeline reverse from here.
             app.Run(async (context) => 
             {
-                await context.Response.WriteAsync(" Hello from .Run() Terminal middleware 1. No endpoint matching.");
+                //await context.Response.WriteAsync(" Hello from .Run() Terminal middleware 1. No endpoint matching.");
+                await context.Response.WriteAsync("Middlewear 3 request handled and response produced"); // (3)
+                logger.LogInformation("Middlewear 3 request handled and response produced"); // (3)
             });
 
             // Terminal middleware 2 will never be execute
-            app.Run(async (context) => 
-            {
-                await context.Response.WriteAsync("Hello from .Run() Terminal middleware 2. No endpoint matching.");
-            });
+            // app.Run(async (context) => 
+            // {
+            //     await context.Response.WriteAsync("Hello from .Run() Terminal middleware 2. No endpoint matching.");
+            // });
         }
     }
 }
@@ -130,3 +147,10 @@ namespace EmployeeManagement
 // context.Request  context.Response
 // Terminal middlewear  app.Run()
 // Next middlewear  app.Use()   
+
+// ILogger, logger.LogInformation(" "),   app.Use()  await next() 
+// 1.Everything that happens before the next() method is invoked in each of the middlewear components, 
+// happens as the REQUEST travels from middlewear to middlewear through the pipeline
+// 2.When a middlewear handles the request and produces response, the request processing pipeline starts to reverse
+// 3.Everything that happens after the next() method is invoked in each of the middlewear components,
+// happens as the RESPONSE travels from middlewear to middlewear through the pipeline
