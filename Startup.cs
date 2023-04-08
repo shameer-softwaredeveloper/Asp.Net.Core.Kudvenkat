@@ -72,13 +72,19 @@ namespace EmployeeManagement
         {
             if (env.IsDevelopment())
             {
+                // Middleware
                 app.UseDeveloperExceptionPage();
             }
 
+            // Middleware
             app.UseRouting();
 
+            // Middleware
             app.UseEndpoints(endpoints =>
             {
+                // MapGet has parameter RequestDelegate. RequestDelegate is a delegate that takes HttpContext object as a parameter. 
+                // It is through this context object the middlewear that we are registering gains access to both the incoming http request and outgoing http response.
+                // context.Request & context.Response
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello World!");
@@ -95,6 +101,32 @@ namespace EmployeeManagement
                     await context.Response.WriteAsync(_config["MyKey"]);
                 });
             });
+
+            // Call next middlewear
+            app.Use(async (context, next) => 
+            {
+                await context.Response.WriteAsync("Hello from .Use() middleware 0. No endpoint matching.");
+                await next();
+            });
+
+            // Terminal middleware -- will not call next middlewear in the pipeline. Pipeline reverse from here.
+            app.Run(async (context) => 
+            {
+                await context.Response.WriteAsync(" Hello from .Run() Terminal middleware 1. No endpoint matching.");
+            });
+
+            // Terminal middleware 2 will never be execute
+            app.Run(async (context) => 
+            {
+                await context.Response.WriteAsync("Hello from .Run() Terminal middleware 2. No endpoint matching.");
+            });
         }
     }
 }
+
+// #11 Configure ASP NET Core request processing pipeline
+// wwwroot ---> all static files js, css, html, images, gif, pdf, txt are present in this special folder
+// Configure(), IApplicationBuilder, app.UseEndPoints() endpoints.MapGet(), RequestDelegate, HttpContext Object
+// context.Request  context.Response
+// Terminal middlewear  app.Run()
+// Next middlewear  app.Use()   
