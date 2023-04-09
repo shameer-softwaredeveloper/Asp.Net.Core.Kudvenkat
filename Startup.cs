@@ -80,8 +80,14 @@ namespace EmployeeManagement
                 app.UseDeveloperExceptionPage();
             }
 
+            // Default Files middlewear
+            app.UseDefaultFiles();
+
             // Static files middlewear
             app.UseStaticFiles();
+
+            // Default Files middlewear should be before Static Files middlewear. Order is important.
+            // app.UseDefaultFiles();
 
             // Middleware
             app.UseRouting();
@@ -165,3 +171,14 @@ namespace EmployeeManagement
 // 2.Static files middlewear: app.UseStaticFiles();  http://localhost:5000/webb1.jpg  http://localhost:5000/images/webb2.jpg  http://localhost:5000/foo.html
 // By default UseStaticFiles() middlewear will only serve static files that are present in this wwwroot folder. 
 // It is also possible to serve static files that are outside of this wwwroot folder if you want to
+
+// Default page
+// When we navigate to root url http://localhost:5000/ without any url segments, we want to serve the default document
+// Name of the default page for the application should be one of the following --- default.htm, default.html, index.htm, index.html
+// app.UseDefaultFiles();  wwwroot\default.html
+// Default Files middlewear should be before Static Files middlewear. Order is important. Why?
+// .UseDefaultFiles() doesnt actually serve the default file, it only changes the request path to point to the default document. In our case default.html
+// Which then will be served by .UseStaticFiles() middlewear like any other static document. 
+// If we have the order reverse then the .UseDefaultFiles middlewear will change the request path but we donot have .UseStaticFiles() middlewear next in the pipeline to serve the default file
+
+
