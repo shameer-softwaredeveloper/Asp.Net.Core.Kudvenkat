@@ -216,6 +216,15 @@ namespace EmployeeManagement
 // Name is the same as that of the middlewear except that we have Options word appended. Simillarly to customize .UseFileServer() middlewear we use FileServerOptions object.
 // To customize .UseDefaultFiles() middlewear we use DefaultFilesOptions object.
 
+// Summary
+// By default an ASP.NET Core Application will not serve static files
+// The default directory for static files is wwwroot
+// To serve static files UseStaticFiles() middlewear is required
+// To serve default file UseDefaultFiles() middlewear is required
+// default file names --- index.htm, index.html, default.htm, default.html
+// but you can change the default file by customizing the behaviour of UseDefaultFiles() middlewear ie DefaultFilesOptions object
+// UseDefaultFiles() must be registered before UseStaticFiles() middlewear
+// UseFileServer() combines the functionality of UseStaticFiles(), UseDefaultFiles() & UseDirectoryBrowser() middleware 
 
 
 
