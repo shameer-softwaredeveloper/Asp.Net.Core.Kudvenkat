@@ -80,6 +80,9 @@ namespace EmployeeManagement
                 app.UseDeveloperExceptionPage();
             }
 
+            // Static files middlewear
+            app.UseStaticFiles();
+
             // Middleware
             app.UseRouting();
 
@@ -108,28 +111,29 @@ namespace EmployeeManagement
 
             // Order of logging request & response (1) -> (5)
             // Call next middlewear
-            app.Use(async (context, next) => 
-            {
-                //await context.Response.WriteAsync("Hello from .Use() middleware 0. No endpoint matching.");
-                logger.LogInformation("Middlewear 1 incoming request"); // (1)
-                await next();
-                logger.LogInformation("Middlewear 1 outgoing response"); // (5)
-            });
+            // app.Use(async (context, next) => 
+            // {
+                // await context.Response.WriteAsync("Hello from .Use() middleware 0. No endpoint matching.");
+                // logger.LogInformation("Middlewear 1 incoming request"); // (1)
+                // await next();
+                // logger.LogInformation("Middlewear 1 outgoing response"); // (5)
+            // });
 
-            app.Use(async (context, next) => 
-            {
-                //await context.Response.WriteAsync("Hello from .Use() middleware 0. No endpoint matching.");
-                logger.LogInformation("Middlewear 2 incoming request"); // (2)
-                await next();
-                logger.LogInformation("Middlewear 2 outgoing response"); // (4)
-            });
+            // app.Use(async (context, next) => 
+            // {
+                // await context.Response.WriteAsync("Hello from .Use() middleware 0. No endpoint matching.");
+                // logger.LogInformation("Middlewear 2 incoming request"); // (2)
+                // await next();
+                // logger.LogInformation("Middlewear 2 outgoing response"); // (4)
+            // });
 
             // Terminal middleware -- will not call next middlewear in the pipeline. Pipeline reverse from here.
             app.Run(async (context) => 
             {
-                //await context.Response.WriteAsync(" Hello from .Run() Terminal middleware 1. No endpoint matching.");
-                await context.Response.WriteAsync("Middlewear 3 request handled and response produced"); // (3)
-                logger.LogInformation("Middlewear 3 request handled and response produced"); // (3)
+                // await context.Response.WriteAsync(" Hello from .Run() Terminal middleware 1. No endpoint matching.");
+                // await context.Response.WriteAsync("Middlewear 3 request handled and response produced"); // (3)
+                // logger.LogInformation("Middlewear 3 request handled and response produced"); // (3)
+                await context.Response.WriteAsync("Hello from Terminal middlewear");
             });
 
             // Terminal middleware 2 will never be execute
@@ -154,3 +158,10 @@ namespace EmployeeManagement
 // 2.When a middlewear handles the request and produces response, the request processing pipeline starts to reverse
 // 3.Everything that happens after the next() method is invoked in each of the middlewear components,
 // happens as the RESPONSE travels from middlewear to middlewear through the pipeline
+
+// #12 Static files in asp net core
+// To serve static files, application should meet 2 requirements
+// 1.All Static files must be present in wwwroot folder. Also called content root folder, it must be directly inside the root project folder
+// 2.Static files middlewear: app.UseStaticFiles();  http://localhost:5000/webb1.jpg  http://localhost:5000/images/webb2.jpg  http://localhost:5000/foo.html
+// By default UseStaticFiles() middlewear will only serve static files that are present in this wwwroot folder. 
+// It is also possible to serve static files that are outside of this wwwroot folder if you want to
