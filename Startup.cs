@@ -81,7 +81,15 @@ namespace EmployeeManagement
             }
 
             // Default Files middlewear
-            app.UseDefaultFiles();
+            // app.UseDefaultFiles();
+
+            // Overloaded Default Files middlewear
+            DefaultFilesOptions defaultFilesOptions = new DefaultFilesOptions();
+            defaultFilesOptions.DefaultFileNames.Clear();
+            defaultFilesOptions.DefaultFileNames.Add("foo.html");  
+
+            // default.html ---> foo.html as default page
+            app.UseDefaultFiles(defaultFilesOptions);
 
             // Static files middlewear
             app.UseStaticFiles();
@@ -180,5 +188,9 @@ namespace EmployeeManagement
 // .UseDefaultFiles() doesnt actually serve the default file, it only changes the request path to point to the default document. In our case default.html
 // Which then will be served by .UseStaticFiles() middlewear like any other static document. 
 // If we have the order reverse then the .UseDefaultFiles middlewear will change the request path but we donot have .UseStaticFiles() middlewear next in the pipeline to serve the default file
+
+// default.html ---> foo.html as default page
+// Overloaded Default Files middlewear --- app.UseDefaultFiles(defaultFilesOptions);
+// DefaultFilesOptions  .DefaultFileNames.Clear();   .DefaultFileNames.Add("foo.html");  
 
 
