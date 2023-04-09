@@ -84,18 +84,21 @@ namespace EmployeeManagement
             // app.UseDefaultFiles();
 
             // Overloaded Default Files middlewear
-            DefaultFilesOptions defaultFilesOptions = new DefaultFilesOptions();
-            defaultFilesOptions.DefaultFileNames.Clear();
-            defaultFilesOptions.DefaultFileNames.Add("foo.html");  
+            // DefaultFilesOptions defaultFilesOptions = new DefaultFilesOptions();
+            // defaultFilesOptions.DefaultFileNames.Clear();
+            // defaultFilesOptions.DefaultFileNames.Add("foo.html");  
 
             // default.html ---> foo.html as default page
-            app.UseDefaultFiles(defaultFilesOptions);
+            // app.UseDefaultFiles(defaultFilesOptions);
 
             // Static files middlewear
-            app.UseStaticFiles();
+            // app.UseStaticFiles();
 
             // Default Files middlewear should be before Static Files middlewear. Order is important.
             // app.UseDefaultFiles();
+
+            // Replace UseDefaultFiles() UseStaticFiles() middlewear with UseFileServer() middlewear
+            app.UseFileServer();
 
             // Middleware
             app.UseRouting();
@@ -192,5 +195,11 @@ namespace EmployeeManagement
 // default.html ---> foo.html as default page
 // Overloaded Default Files middlewear --- app.UseDefaultFiles(defaultFilesOptions);
 // DefaultFilesOptions  .DefaultFileNames.Clear();   .DefaultFileNames.Add("foo.html");  
+
+// UseFileServer() middlewear
+// has functionality of UseDefaultFiles() UseStaticFiles() UseDirectoryBrowser() middlewear
+// UseDirectoryBrowser() middlewear enables directory browsing and allows the end user to see the list of files and folders in a specified directory 
+
+
 
 
