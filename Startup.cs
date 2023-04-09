@@ -98,7 +98,14 @@ namespace EmployeeManagement
             // app.UseDefaultFiles();
 
             // Replace UseDefaultFiles() UseStaticFiles() middlewear with UseFileServer() middlewear
-            app.UseFileServer();
+            // app.UseFileServer();
+
+            // File Server middlewear overloaded
+            FileServerOptions fileServerOptions = new FileServerOptions();
+            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
+            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("foo.html");
+
+            app.UseFileServer(fileServerOptions);
 
             // Middleware
             app.UseRouting();
@@ -199,6 +206,18 @@ namespace EmployeeManagement
 // UseFileServer() middlewear
 // has functionality of UseDefaultFiles() UseStaticFiles() UseDirectoryBrowser() middlewear
 // UseDirectoryBrowser() middlewear enables directory browsing and allows the end user to see the list of files and folders in a specified directory 
+
+// UseFileServer() middlewear overloaded --- app.UseFileServer(fileServerOptions);
+// FileServerOptions      .DefaultFilesOptions.DefaultFileNames.Clear()      .DefaultFilesOptions.DefaultFileNames.Add("foo.html");
+
+// To add and customize these middlewear components, in most cases we add middlewear components to our applications request processing pipeline using extension method names that start with the word .Use
+// Example .UseDeveloperExceptionPage()  .UseDefaultFiles()   .UseStaticFiles()   .UseFileServer()   .UseRouting()  .UseEndpoints()  .Use()  .Run()
+// And Customize these middlewear components, we use the respective options objects. To customize .UseDeveloperExceptionPage() middlewear we use DeveloperExceptionPageOptions.
+// Name is the same as that of the middlewear except that we have Options word appended. Simillarly to customize .UseFileServer() middlewear we use FileServerOptions object.
+// To customize .UseDefaultFiles() middlewear we use DefaultFilesOptions object.
+
+
+
 
 
 
