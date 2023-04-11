@@ -277,6 +277,7 @@ namespace EmployeeManagement
 // IWebHostEnvironment --- Provides information about the web hosting environment an application is running in
 // Can read from launchSettings.json ---> environmentVariables": ----> "ASPNETCORE_ENVIRONMENT"
 // Can read from Operating system --> Control Panel --> Edit System Environemnt Variable --> Environment Variables --> System Variables --> New ---> "ASPNETCORE_ENVIRONMENT" "Development"
-
+// Value of Environment variable in launchSettings.json will override the value in Operating system environment variable
+// Production is default value for environment vaariable
 
 
