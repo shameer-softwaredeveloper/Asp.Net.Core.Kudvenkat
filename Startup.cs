@@ -178,6 +178,7 @@ namespace EmployeeManagement
 
                 // IWebHostEnvironment --- Provides information about the web hosting environment an application is running in
                 // Can read from launchSettings.json ---> environmentVariables": ----> "ASPNETCORE_ENVIRONMENT"
+                // Can read from Operating System --- Environment Variable
                 await context.Response.WriteAsync("Hosting Environment: " + env.EnvironmentName);
             });
 
@@ -275,6 +276,7 @@ namespace EmployeeManagement
 // #14 ASP NET Core environment variables
 // IWebHostEnvironment --- Provides information about the web hosting environment an application is running in
 // Can read from launchSettings.json ---> environmentVariables": ----> "ASPNETCORE_ENVIRONMENT"
+// Can read from Operating system --> Control Panel --> Edit System Environemnt Variable --> Environment Variables --> System Variables --> New ---> "ASPNETCORE_ENVIRONMENT" "Development"
 
 
 
