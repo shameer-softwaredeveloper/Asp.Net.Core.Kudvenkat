@@ -75,11 +75,11 @@ namespace EmployeeManagement
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             // .UseDeveloperExceptionPage() middleware plugged into request procesing pipeline as early as possible
-            if (env.IsDevelopment())
-            {
-                // Middleware
-                app.UseDeveloperExceptionPage();
-            }
+            // if (env.IsDevelopment())
+            // {
+            //     // Middleware
+            //     app.UseDeveloperExceptionPage();
+            // }
 
             // Default Files middlewear
             // app.UseDefaultFiles();
@@ -163,6 +163,13 @@ namespace EmployeeManagement
 
                 await context.Response.WriteAsync("Hello from Terminal middlewear");
             });
+
+            // We donot see the developer exception page. To work properly .UseDeveloperExceptionPage() must be plugged in early in the pipeline.
+            if (env.IsDevelopment())
+            {
+                // Middleware
+                app.UseDeveloperExceptionPage();
+            }
 
             // Terminal middleware 2 will never be execute
             // app.Run(async (context) => 
