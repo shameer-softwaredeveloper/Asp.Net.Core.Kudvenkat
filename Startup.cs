@@ -74,6 +74,7 @@ namespace EmployeeManagement
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
+            // .UseDeveloperExceptionPage() middleware plugged into request procesing pipeline as early as possible
             if (env.IsDevelopment())
             {
                 // Middleware
@@ -98,14 +99,14 @@ namespace EmployeeManagement
             // app.UseDefaultFiles();
 
             // Replace UseDefaultFiles() UseStaticFiles() middlewear with UseFileServer() middlewear
-            // app.UseFileServer();
+            app.UseFileServer();
 
             // File Server middlewear overloaded
-            FileServerOptions fileServerOptions = new FileServerOptions();
-            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
-            fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("foo.html");
+            // FileServerOptions fileServerOptions = new FileServerOptions();
+            // fileServerOptions.DefaultFilesOptions.DefaultFileNames.Clear();
+            // fileServerOptions.DefaultFilesOptions.DefaultFileNames.Add("foo.html");
 
-            app.UseFileServer(fileServerOptions);
+            // app.UseFileServer(fileServerOptions);
 
             // Middleware
             app.UseRouting();
@@ -157,6 +158,9 @@ namespace EmployeeManagement
                 // await context.Response.WriteAsync(" Hello from .Run() Terminal middleware 1. No endpoint matching.");
                 // await context.Response.WriteAsync("Middlewear 3 request handled and response produced"); // (3)
                 // logger.LogInformation("Middlewear 3 request handled and response produced"); // (3)
+
+                throw new Exception("Some error processing the request");
+
                 await context.Response.WriteAsync("Hello from Terminal middlewear");
             });
 
@@ -226,6 +230,15 @@ namespace EmployeeManagement
 // UseDefaultFiles() must be registered before UseStaticFiles() middlewear
 // UseFileServer() combines the functionality of UseStaticFiles(), UseDefaultFiles() & UseDirectoryBrowser() middleware 
 
+// #13 ASP NET Core developer exception page
+// In Application request processing pipeline, the first middlewear component that is plugged in is app.UseDeveloperExceptionPage(); 
+// When we make a request at the http://localhost:5000/abx.html?a=10&b=20   .UseDeveloperExceptionPage() is not going to do anything with the incoming request.
+// It will simply pass that request to the next piece of middlewear that is .UseFileServer(). 
+// We know we donot have a file with name abx.html so this middleware component is going to pass the request to the next piece of middleware.
+// .Run() is throwing exception  throw new Exception("Some error processing the request"); 
+// .UseDeveloperExceptionPage() detects that any other middleware that is registered after it in the pipeline produces an exception, is going to take that exception and serve this exception page
+// .UseDeveloperExceptionPage() middlewear must be plugged into request procesing pipeline as early as possible. 
+// So that it can handle the exception and display this developer exception page if a subsequent middleware component in the pipeline raises an exception
 
 
 
