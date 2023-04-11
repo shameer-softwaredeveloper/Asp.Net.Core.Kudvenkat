@@ -81,6 +81,19 @@ namespace EmployeeManagement
             //     app.UseDeveloperExceptionPage();
             // }
 
+            // Overload .UseDeveloperExceptionPage() using Options object
+            if (env.IsDevelopment())
+            {
+                DeveloperExceptionPageOptions developerExceptionPageOptions = new DeveloperExceptionPageOptions
+                {
+                    // determines the lines of sourcecode to display before & after the line that actually causes the exception
+                    SourceCodeLineCount = 1
+                };
+                
+                // Middleware
+                app.UseDeveloperExceptionPage(developerExceptionPageOptions);
+            }
+
             // Default Files middlewear
             // app.UseDefaultFiles();
 
@@ -165,11 +178,11 @@ namespace EmployeeManagement
             });
 
             // We donot see the developer exception page. To work properly .UseDeveloperExceptionPage() must be plugged in early in the pipeline.
-            if (env.IsDevelopment())
-            {
-                // Middleware
-                app.UseDeveloperExceptionPage();
-            }
+            // if (env.IsDevelopment())
+            // {
+            //     // Middleware
+            //     app.UseDeveloperExceptionPage();
+            // }
 
             // Terminal middleware 2 will never be execute
             // app.Run(async (context) => 
@@ -247,7 +260,11 @@ namespace EmployeeManagement
 // .UseDeveloperExceptionPage() middlewear must be plugged into request procesing pipeline as early as possible. 
 // So that it can handle the exception and display this developer exception page if a subsequent middleware component in the pipeline raises an exception
 
+// Overload .UseDeveloperExceptionPage() middleware using Options object
+// DeveloperExceptionPageOptions    SourceCodeLineCount = 1    determines the lines of sourcecode to display before & after the line that actually causes the exception
 
-
-
+// To enable plugin UseDeveloperExceptionPage middleware in the pipeline
+// Must be plugged in the pipeline as early as possible
+// Contains Stack Trace, Query String, Cookies & HTTP header
+// For customization use DeveloperExceptionPageOptions object
 
