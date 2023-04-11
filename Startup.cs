@@ -75,24 +75,24 @@ namespace EmployeeManagement
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             // .UseDeveloperExceptionPage() middleware plugged into request procesing pipeline as early as possible
-            // if (env.IsDevelopment())
-            // {
-            //     // Middleware
-            //     app.UseDeveloperExceptionPage();
-            // }
-
-            // Overload .UseDeveloperExceptionPage() using Options object
             if (env.IsDevelopment())
             {
-                DeveloperExceptionPageOptions developerExceptionPageOptions = new DeveloperExceptionPageOptions
-                {
-                    // determines the lines of sourcecode to display before & after the line that actually causes the exception
-                    SourceCodeLineCount = 1
-                };
-                
                 // Middleware
-                app.UseDeveloperExceptionPage(developerExceptionPageOptions);
+                app.UseDeveloperExceptionPage();
             }
+
+            // Overload .UseDeveloperExceptionPage() using Options object
+            // if (env.IsDevelopment())
+            // {
+            //     DeveloperExceptionPageOptions developerExceptionPageOptions = new DeveloperExceptionPageOptions
+            //     {
+            //         // determines the lines of sourcecode to display before & after the line that actually causes the exception
+            //         SourceCodeLineCount = 1
+            //     };
+                
+            //     // Middleware
+            //     app.UseDeveloperExceptionPage(developerExceptionPageOptions);
+            // }
 
             // Default Files middlewear
             // app.UseDefaultFiles();
@@ -106,13 +106,13 @@ namespace EmployeeManagement
             // app.UseDefaultFiles(defaultFilesOptions);
 
             // Static files middlewear
-            // app.UseStaticFiles();
+            app.UseStaticFiles();
 
             // Default Files middlewear should be before Static Files middlewear. Order is important.
             // app.UseDefaultFiles();
 
             // Replace UseDefaultFiles() UseStaticFiles() middlewear with UseFileServer() middlewear
-            app.UseFileServer();
+            // app.UseFileServer();
 
             // File Server middlewear overloaded
             // FileServerOptions fileServerOptions = new FileServerOptions();
@@ -122,30 +122,30 @@ namespace EmployeeManagement
             // app.UseFileServer(fileServerOptions);
 
             // Middleware
-            app.UseRouting();
+            // app.UseRouting();
 
             // Middleware
-            app.UseEndpoints(endpoints =>
-            {
-                // MapGet has parameter RequestDelegate. RequestDelegate is a delegate that takes HttpContext object as a parameter. 
-                // It is through this context object the middlewear that we are registering gains access to both the incoming http request and outgoing http response.
-                // context.Request & context.Response
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+            // app.UseEndpoints(endpoints =>
+            // {
+            //     // MapGet has parameter RequestDelegate. RequestDelegate is a delegate that takes HttpContext object as a parameter. 
+            //     // It is through this context object the middlewear that we are registering gains access to both the incoming http request and outgoing http response.
+            //     // context.Request & context.Response
+            //     endpoints.MapGet("/", async context =>
+            //     {
+            //         await context.Response.WriteAsync("Hello World!");
+            //     });
 
-                endpoints.MapGet("/xyz", async context =>
-                {
-                    await context.Response.WriteAsync("Hello XYZ");
-                });
+            //     endpoints.MapGet("/xyz", async context =>
+            //     {
+            //         await context.Response.WriteAsync("Hello XYZ");
+            //     });
 
-                //read configuration using key "MyKey"
-                endpoints.MapGet("/readconfig", async context =>
-                {
-                    await context.Response.WriteAsync(_config["MyKey"]);
-                });
-            });
+            //     //read configuration using key "MyKey"
+            //     endpoints.MapGet("/readconfig", async context =>
+            //     {
+            //         await context.Response.WriteAsync(_config["MyKey"]);
+            //     });
+            // });
 
             // Order of logging request & response (1) -> (5)
             // Call next middlewear
@@ -172,9 +172,13 @@ namespace EmployeeManagement
                 // await context.Response.WriteAsync("Middlewear 3 request handled and response produced"); // (3)
                 // logger.LogInformation("Middlewear 3 request handled and response produced"); // (3)
 
-                throw new Exception("Some error processing the request");
+                // throw new Exception("Some error processing the request");
 
-                await context.Response.WriteAsync("Hello from Terminal middlewear");
+                // await context.Response.WriteAsync("Hello from Terminal middlewear");
+
+                // IWebHostEnvironment --- Provides information about the web hosting environment an application is running in
+                // Can read from launchSettings.json ---> environmentVariables": ----> "ASPNETCORE_ENVIRONMENT"
+                await context.Response.WriteAsync("Hosting Environment: " + env.EnvironmentName);
             });
 
             // We donot see the developer exception page. To work properly .UseDeveloperExceptionPage() must be plugged in early in the pipeline.
@@ -267,4 +271,10 @@ namespace EmployeeManagement
 // Must be plugged in the pipeline as early as possible
 // Contains Stack Trace, Query String, Cookies & HTTP header
 // For customization use DeveloperExceptionPageOptions object
+
+// #14 ASP NET Core environment variables
+// IWebHostEnvironment --- Provides information about the web hosting environment an application is running in
+// Can read from launchSettings.json ---> environmentVariables": ----> "ASPNETCORE_ENVIRONMENT"
+
+
 
