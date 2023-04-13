@@ -19,7 +19,7 @@ namespace EmployeeManagement.Controllers
         public ViewResult Details()
         {
             Employee model = _employeeRepository.GetEmployee(1);
-            return View("../Test/Update"); //Relative path doesnot required file extension. Absolute path /file.extension is required
+            return View("../../MyViews/Test"); // MyViews folder is 2 level up relative to Views/Home/Details.cshtml folder
         }
     }
 }
