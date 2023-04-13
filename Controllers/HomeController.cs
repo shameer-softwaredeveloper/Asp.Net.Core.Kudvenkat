@@ -8,8 +8,7 @@ namespace EmployeeManagement
         // http://localhost:5000/home/index
         public JsonResult Index()
         {
-            //return "Hello from MVC";
-            return Json(new {id=1, name="Shameer"});
+            return Json(new {id=1, name="Shameer"}); 
         }
     }
 }

@@ -19,8 +19,8 @@ namespace EmployeeManagement
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddMvcCore();
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddMvcCore(options => options.EnableEndpointRouting = false);
+            //services.AddMvc(options => options.EnableEndpointRouting = false);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
