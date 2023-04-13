@@ -1,12 +1,15 @@
+using Microsoft.AspNetCore.Mvc;
+
 namespace EmployeeManagement
 {
-    public class HomeController
+    public class HomeController : Controller
     {
         // http://localhost:5000/
         // http://localhost:5000/home/index
-        public string Index()
+        public JsonResult Index()
         {
-            return "Hello from MVC";
+            //return "Hello from MVC";
+            return Json(new {id=1, name="Shameer"});
         }
     }
 }
