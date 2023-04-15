@@ -1,22 +1,19 @@
 @model EmployeeManagement.ViewModels.HomeDetailsViewModel
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
-    <h1>Details.cshtml from views/home/ folder</h1>
-    <h3>@Model.PageTitle</h3>   
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Employee Details";
+}
 
-    <div>
-        Name : @Model.Employee.Name
-    </div>
-    <div>
-        Email : @Model.Employee.Email
-    </div>
-    <div>
-        Department : @Model.Employee.Department
-    </div>
+<h1>Details.cshtml from views/home/ folder</h1>
+<h3>@Model.PageTitle</h3>   
 
-</body>
-</html>
+<div>
+    Name : @Model.Employee.Name
+</div>
+<div>
+    Email : @Model.Employee.Email
+</div>
+<div>
+    Department : @Model.Employee.Department
+</div>
