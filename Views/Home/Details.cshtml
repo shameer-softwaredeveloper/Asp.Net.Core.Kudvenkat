@@ -4,29 +4,16 @@
 </head>
 <body>
     <h1>Details.cshtml from views/home/ folder</h1>
-    <h3>@ViewData["PageTitle"]</h3>
-
-    @{
-        // Block of C# Code using @{ }
-        // If we access any other type of data other than string, then explicitly cast to the type we are expecting - 'as' keyword
-        var employee = ViewData["Employee"] as EmployeeManagement.Models.Employee;
-
-        // Drawbacks of using ViewData
-        // Making Details.cshtml view a loosely typed view
-        // The view doesnt know the type of the data we are storing against these random keys PageTitle & Employee at compile time
-        // The view will know the type of data stored by these keys only at runtime when these keys are resolved 
-        // No intellisense - we can easily misspell the keys and build will be succeeded. We will only come to know about them at runtime when exception is thrown
-        // For this reason we donot use ViewData
-    }
+    <h3>@ViewBag.PageTitle</h3>   
 
     <div>
-        Name : @employee.Name
+        Name : @ViewBag.Employee.Name
     </div>
     <div>
-        Email : @employee.Email
+        Email : @ViewBag.Employee.Email
     </div>
     <div>
-        Department : @employee.Department
+        Department : @ViewBag.Employee.Department
     </div>
 
 </body>
