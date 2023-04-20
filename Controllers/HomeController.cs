@@ -22,7 +22,7 @@ namespace EmployeeManagement.Controllers
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
-              Employee = _employeeRepository.GetEmployee(id),
+              Employee = _employeeRepository.GetEmployee(1),
               PageTitle = "Employee Details"
             };
 
