@@ -20,7 +20,6 @@ namespace EmployeeManagement
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddMvcCore(options => options.EnableEndpointRouting = false);
             services.AddMvc(options => options.EnableEndpointRouting = false).AddXmlSerializerFormatters();
 
             services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
@@ -36,12 +35,8 @@ namespace EmployeeManagement
 
             app.UseStaticFiles();
 
-            //app.UseMvc();
-            app.UseMvcWithDefaultRoute();
-
-            app.Run(async (context) => 
-            {
-                await context.Response.WriteAsync("Hello World");
+            app.UseMvc(routes => {
+                routes.MapRoute("default","{controller}/{action}/{id}");
             });
         }
     }
