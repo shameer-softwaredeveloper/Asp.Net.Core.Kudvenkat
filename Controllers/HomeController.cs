@@ -4,7 +4,7 @@ using EmployeeManagement.ViewModels;
 
 namespace EmployeeManagement.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -15,14 +15,13 @@ namespace EmployeeManagement.Controllers
 
         [Route("~/")]
         [Route("")]
-        [Route("[action]")]
         public ViewResult Index()
         {
             var model = _employeeRepository.GetAllEmployee();
             return View(model);
         }
 
-        [Route("[action]/{id?}")]
+        [Route("{id?}")]
         public ViewResult Details(int? id)
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
