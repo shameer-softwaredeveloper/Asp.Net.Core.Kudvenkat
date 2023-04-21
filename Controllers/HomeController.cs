@@ -13,6 +13,7 @@ namespace EmployeeManagement.Controllers
             _employeeRepository = employeeRepository;
         }
 
+        [Route("~/")]
         [Route("")]
         [Route("Index")]
         public ViewResult Index()
