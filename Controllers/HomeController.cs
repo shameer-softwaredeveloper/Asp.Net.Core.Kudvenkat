@@ -21,6 +21,7 @@ namespace EmployeeManagement.Controllers
             return View(model);
         }
 
+        [Route("Home/Details/{id}")]
         public ViewResult Details(int id)
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
