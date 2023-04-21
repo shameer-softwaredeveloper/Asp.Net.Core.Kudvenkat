@@ -4,24 +4,24 @@ using EmployeeManagement.ViewModels;
 
 namespace EmployeeManagement.Controllers
 {
-    public class WelcomeController : Controller
+    [Route("Home")]
+    public class HomeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
-        public WelcomeController(IEmployeeRepository employeeRepository)
+        public HomeController(IEmployeeRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }
 
         [Route("")]
-        [Route("home")]
-        [Route("Home/Index")]
-        public ViewResult List()
+        [Route("Index")]
+        public ViewResult Index()
         {
             var model = _employeeRepository.GetAllEmployee();
-            return View("~/Views/Home/Index.cshtml", model);
+            return View(model);
         }
 
-        [Route("Home/Details/{id?}")]
+        [Route("Details/{id?}")]
         public ViewResult Details(int? id)
         {
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
