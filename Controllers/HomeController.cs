@@ -14,6 +14,7 @@ namespace EmployeeManagement.Controllers
         }
 
         [Route("~/")]
+        [Route("~/Home")]
         [Route("")]
         public ViewResult Index()
         {
