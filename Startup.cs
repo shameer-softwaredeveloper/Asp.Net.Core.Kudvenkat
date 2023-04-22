@@ -36,7 +36,7 @@ namespace EmployeeManagement
             app.UseStaticFiles();
 
             app.UseMvc(routes => {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{Id?}");
+                routes.MapRoute("default", "shameer/{controller=Home}/{action=Index}/{Id?}");
             });
         }
     }
