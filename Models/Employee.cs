@@ -7,6 +7,7 @@ namespace EmployeeManagement.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(10, ErrorMessage = "Name cannot exceed 10 characters")]
         public string Name { get; set; }
 
         [Required]
