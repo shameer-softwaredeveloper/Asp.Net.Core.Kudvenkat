@@ -25,6 +25,7 @@
             <select asp-for="Department" asp-items="Html.GetEnumSelectList<Dept>()" class="custom-select mr-sm-2"></select>
         </div>
     </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div>
         <button type="submit" class="btn btn-primary">Create</button>
     </div>
