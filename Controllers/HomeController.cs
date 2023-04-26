@@ -18,25 +18,28 @@ namespace EmployeeManagement.Controllers
             return View(model);
         }
 
-        // public ViewResult Details(int? id)
-        // {
-        //     HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
-        //     {
-        //       Employee = _employeeRepository.GetEmployee(id ?? 1),
-        //       PageTitle = "Employee Details"
-        //     };
-
-        //     return View(homeDetailsViewModel); 
-        // }
-
-        public string Details(int? id, string name)
+        public ViewResult Details(int? id)
         {
-            return "id = " + id.Value.ToString() + " name = " + name;
+            HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
+            {
+              Employee = _employeeRepository.GetEmployee(id ?? 1),
+              PageTitle = "Employee Details"
+            };
+
+            return View(homeDetailsViewModel); 
         }
 
+        [HttpGet]
         public ViewResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public RedirectToActionResult Create(Employee employee)
+        {
+            Employee newEmployee = _employeeRepository.Add(employee);
+            return RedirectToAction("details", new {id=newEmployee.Id});
         }
     }
 }
