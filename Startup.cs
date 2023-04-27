@@ -22,7 +22,7 @@ namespace EmployeeManagement
         {
             services.AddMvc(options => options.EnableEndpointRouting = false).AddXmlSerializerFormatters();
 
-            services.AddScoped<IEmployeeRepository, MockEmployeeRepository>();
+            services.AddTransient<IEmployeeRepository, MockEmployeeRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
