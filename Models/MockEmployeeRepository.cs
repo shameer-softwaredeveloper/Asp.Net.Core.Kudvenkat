@@ -34,7 +34,7 @@ namespace EmployeeManagement.Models
             return employee;
         }
 
-        Employee Update(Employee employeeChanges)
+        public Employee Update(Employee employeeChanges)
         {
             Employee employee = _employeeList.FirstOrDefault(e => e.Id == employeeChanges.Id);
             if(employee != null)
@@ -46,7 +46,7 @@ namespace EmployeeManagement.Models
             return employee; 
         }
 
-        Employee Delete(int id)
+        public Employee Delete(int id)
         {
             Employee employee = _employeeList.FirstOrDefault(e => e.Id == id);
             if(employee != null)
