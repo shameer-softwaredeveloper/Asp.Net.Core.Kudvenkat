@@ -14,9 +14,16 @@ namespace EmployeeManagement.Models
                 new Employee
                 {
                     Id = 3,
-                    Name = "Mark",
+                    Name = "Marry",
                     Department = Dept.IT,
-                    Email = "mark@pragimtech.com"
+                    Email = "marry@pragimtech.com"
+                },
+                new Employee
+                {
+                    Id = 5,
+                    Name = "John",
+                    Department = Dept.IT,
+                    Email = "John@pragimtech.com"
                 }
             );
         }
