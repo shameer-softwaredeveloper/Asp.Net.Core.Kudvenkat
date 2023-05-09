@@ -40,9 +40,6 @@ namespace EmployeeManagement.Migrations
                     b.Property<string>("PhotoPat")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SomeProperty")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Employees");
@@ -53,16 +50,14 @@ namespace EmployeeManagement.Migrations
                             Id = 3,
                             Department = 2,
                             Email = "marry@pragimtech.com",
-                            Name = "Marry",
-                            SomeProperty = 0
+                            Name = "Marry"
                         },
                         new
                         {
                             Id = 5,
                             Department = 2,
                             Email = "John@pragimtech.com",
-                            Name = "John",
-                            SomeProperty = 0
+                            Name = "John"
                         });
                 });
 #pragma warning restore 612, 618
