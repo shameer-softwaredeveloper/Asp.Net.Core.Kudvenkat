@@ -18,8 +18,6 @@ namespace EmployeeManagement.Models
         [Required]
         public Dept? Department { get; set; }
 
-        public string PhotoPat { get; set; }
-
-        public int SomeProperty { get; set; }
+        public string PhotoPath { get; set; }
     }
 }
