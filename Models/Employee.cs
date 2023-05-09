@@ -19,7 +19,5 @@ namespace EmployeeManagement.Models
         public Dept? Department { get; set; }
 
         public string PhotoPat { get; set; }
-
-        public int SomeProperty { get; set; }
     }
 }
