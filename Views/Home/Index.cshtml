@@ -9,7 +9,7 @@
     @foreach (var employee in Model)
     {
         var PhotoPath = "~/images/" + (employee.PhotoPath ?? "noimage.jpg");
-        <div class="card m-3">
+        <div class="card m-3" style="min-width: 18rem; max-width: 30.5%;">
             <div class="card-header">
                 <h3>@employee.Name</h3>
             </div>
