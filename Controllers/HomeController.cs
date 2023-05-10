@@ -4,6 +4,7 @@ using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace EmployeeManagement.Controllers
 {
@@ -48,12 +49,15 @@ namespace EmployeeManagement.Controllers
             {
                 string uniqueFileName = null;
 
-                if(model.Photo != null)
+                if(model.Photos != null && model.Photos.Count > 0)
                 {
-                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                    foreach(IFormFile photo in model.Photos)
+                    {
+                        string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                        uniqueFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                        photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                    }
                 }
 
                 Employee newEmployee = new Employee{
