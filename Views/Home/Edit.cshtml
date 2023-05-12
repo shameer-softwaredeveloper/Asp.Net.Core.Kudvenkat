@@ -1,10 +1,12 @@
-@model EmployeeCreateViewModel
+@model EmployeeEditViewModel
 
 @{
-    ViewBag.Title = "Create Employee";
+    ViewBag.Title = "Edit Employee";
 }
 
-<form enctype="multipart/form-data" asp-controller="home" asp-action="create" method="post" class="mt-3">
+<form enctype="multipart/form-data" asp-controller="home" asp-action="edit" method="post" class="mt-3">
+    <input hidden asp-for="Id"/>
+    <input hidden asp-for="ExistingPhotoPath"/>
     <div class="form-group row">
         <label asp-for="Name" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
@@ -33,14 +35,15 @@
         <div class="col-sm-10">
             <div class="custom-file">
                 <input asp-for="Photo" class="form-control custom-file-input"/>
-                <label class="custom-file-label">Choose File...</label>
+                <label class="custom-file-label">Click here to change photo</label>
             </div>
         </div>
     </div>
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group-row">
         <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a asp-controller="home" asp-action="index" class="btn btn-primary">Cancel</a>
         </div>
     </div>
     @section Scripts {
