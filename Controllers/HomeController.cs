@@ -91,6 +91,11 @@ namespace EmployeeManagement.Controllers
 
                 if(model.Photo != null)
                 {
+                    if(model.ExistingPhotoPath != null)
+                    {
+                        string filePath = Path.Combine(hostingEnvironment.WebRootPath, "images", model.ExistingPhotoPath);
+                        System.IO.File.Delete(filePath);
+                    }
                     employee.PhotoPath = ProcessUploadedFile(model);
                 }
 
