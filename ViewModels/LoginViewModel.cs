@@ -12,6 +12,7 @@ namespace EmployeeManagement.ViewModels
         [DataType(DataType.Password)]
         public string Password {get; set;}
 
+        // IsPersistent Cookie. Checkbox
         [Display(Name = "Remember me")]
         public bool RememberMe {get; set;}
     }
