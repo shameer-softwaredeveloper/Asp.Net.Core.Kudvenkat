@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EmployeeManagement.Controllers
 {
@@ -57,12 +58,14 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ViewResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(EmployeeCreateViewModel model)
         {
             if(ModelState.IsValid) 
@@ -84,6 +87,7 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ViewResult Edit(int Id)
         {
             Employee employee = _employeeRepository.GetEmployee(Id);
@@ -101,6 +105,7 @@ namespace EmployeeManagement.Controllers
         }
 
          [HttpPost]
+         [Authorize]
         public IActionResult Edit(EmployeeEditViewModel model)
         {
             if(ModelState.IsValid)
