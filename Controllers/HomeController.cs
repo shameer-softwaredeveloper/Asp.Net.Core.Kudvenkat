@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EmployeeManagement.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -58,14 +59,12 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public ViewResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult Create(EmployeeCreateViewModel model)
         {
             if(ModelState.IsValid) 
@@ -87,7 +86,6 @@ namespace EmployeeManagement.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public ViewResult Edit(int Id)
         {
             Employee employee = _employeeRepository.GetEmployee(Id);
@@ -104,8 +102,7 @@ namespace EmployeeManagement.Controllers
             return View(employeeEditViewModel);
         }
 
-         [HttpPost]
-         [Authorize]
+        [HttpPost]
         public IActionResult Edit(EmployeeEditViewModel model)
         {
             if(ModelState.IsValid)
