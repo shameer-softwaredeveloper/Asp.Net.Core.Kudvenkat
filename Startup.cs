@@ -34,6 +34,8 @@ namespace EmployeeManagement
 
             services.AddMvc(options => {
                 options.EnableEndpointRouting = false;
+                
+                //Apply Authorize attribute globally
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
                 }).AddXmlSerializerFormatters();
