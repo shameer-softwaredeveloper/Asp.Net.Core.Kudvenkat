@@ -24,8 +24,25 @@ namespace EmployeeManagement.Controllers
             return View();
         }
 
-        [HttpPost]
+        
+        [HttpPost][HttpGet]
         [AllowAnonymous]
+        public async Task<IActionResult> IsEmailInUse(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            
+            if(user == null)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json($"Email {email} is already in use");
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous] 
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if(ModelState.IsValid)
