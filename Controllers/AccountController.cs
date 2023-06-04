@@ -25,7 +25,7 @@ namespace EmployeeManagement.Controllers
         }
 
         
-        [HttpPost][HttpGet]
+        [AcceptVerbs("Get", "Post")]
         [AllowAnonymous]
         public async Task<IActionResult> IsEmailInUse(string email)
         {
