@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using EmployeeManagement.Utilities;
 
 namespace EmployeeManagement.ViewModels
 {
@@ -8,6 +9,7 @@ namespace EmployeeManagement.ViewModels
         [Required]
         [EmailAddress]
         [Remote(controller:"Account", action:"IsEmailInUse")]
+        [ValidEmailDomainAttributes(allowedDomain:"gmail.com", ErrorMessage = "Email domain must be gmail.com")]
         public string Email {get; set;}
 
         [Required]
