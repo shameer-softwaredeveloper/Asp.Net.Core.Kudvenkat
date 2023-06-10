@@ -5,7 +5,12 @@ namespace EmployeeManagement.ViewModels
 {
     public class EditRoleViewModel
     {
-        public int Id {get; set;}
+        public EditRoleViewModel()
+        {
+            Users = new List<string>();
+        }
+
+        public string Id {get; set;}
 
         [Required(ErrorMessage = "Role Name is required")]
         public string RoleName { get; set; }
