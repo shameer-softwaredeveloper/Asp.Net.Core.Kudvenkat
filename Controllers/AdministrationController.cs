@@ -122,7 +122,7 @@ namespace EmployeeManagement.Controllers
 
             var model = new List<UserRoleViewModel>();
 
-            foreach(var user in userManager.Users)
+            foreach(var user in await userManager.Users.ToListAsync())
             {
                 var userRoleViewModel = new UserRoleViewModel{ UserId = user.Id, UserName = user.UserName };
 
