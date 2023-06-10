@@ -3,6 +3,7 @@ using EmployeeManagement.Models;
 using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeManagement.Controllers
 {
@@ -65,7 +66,7 @@ namespace EmployeeManagement.Controllers
 
             var model = new EditRoleViewModel{Id = role.Id, RoleName = role.Name};
 
-            foreach(var user in userManager.Users)
+            foreach(var user in await userManager.Users.ToListAsync())
             {
                 if(await userManager.IsInRoleAsync(user, role.Name))
                 {
