@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace EmployeeManagement.Controllers
 {
@@ -16,10 +17,14 @@ namespace EmployeeManagement.Controllers
     {
         private readonly RoleManager<IdentityRole> rolemanager;
         private readonly UserManager<ApplicationUser> userManager;
-        public AdministrationController(RoleManager<IdentityRole> rolemanager, UserManager<ApplicationUser> userManager)
+        private readonly ILogger<AdministrationController> logger;
+        public AdministrationController(RoleManager<IdentityRole> rolemanager, 
+                                        UserManager<ApplicationUser> userManager,
+                                        ILogger<AdministrationController> logger)
         {
             this.rolemanager = rolemanager;
             this.userManager = userManager;
+            this.logger = logger;
         }
 
         [HttpPost]
@@ -78,8 +83,9 @@ namespace EmployeeManagement.Controllers
 
                     return View("ListRoles");
                 }
-                catch(Exception ex)
+                catch(DbUpdateException ex)
                 {
+                    logger.LogError($"Error deleting role {ex}");
                     ViewBag.ErrorTitle = $"{role.Name} role is in use";
                     ViewBag.ErrorMessage = $"{role.Name} role cannot be deleted as there are users in this role." +
                         $"If you want to delete this role, please remove the users from the role and then try to delete";
