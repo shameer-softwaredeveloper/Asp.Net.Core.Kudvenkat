@@ -27,6 +27,40 @@ namespace EmployeeManagement.Controllers
             this.logger = logger;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ManageUserRoles(string userId)
+        {
+            ViewBag.userId = userId;
+
+            var user = await userManager.FindByIdAsync(userId);
+
+            if(user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {userId} cannot be found";
+                return View("NotFound");
+            }
+
+            var model = new List<UserRolesViewModel>();
+
+            foreach(var role in await rolemanager.Roles.ToListAsync())
+            {
+                var userRolesViewModel = new UserRolesViewModel{RoleId = role.Id, RoleName = role.Name};
+
+                if(await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    userRolesViewModel.IsSelected = true;
+                }
+                else
+                {
+                    userRolesViewModel.IsSelected = false;
+                }
+
+                model.Add(userRolesViewModel);
+            }
+
+            return View(model);
+        }
+
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string id)
         {
