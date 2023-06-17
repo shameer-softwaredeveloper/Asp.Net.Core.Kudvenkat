@@ -49,15 +49,19 @@ namespace EmployeeManagement
             {
                 options.AddPolicy("DeleteRolePolicy", policy => policy.RequireClaim("Delete Role"));
 
-                options.AddPolicy("EditRolePolicy", policy => policy.RequireAssertion(context => 
-                    context.User.IsInRole("Admin") && context.User.HasClaim(claim => claim.Type == "Edit Role" && claim.Value == "true")
-                    || context.User.IsInRole("Super Admin")));
+                options.AddPolicy("EditRolePolicy", policy => policy.RequireAssertion(context => AuthorizeAccess(context)));
 
                 options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin"));
             });
 
             //services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
+        }
+
+        private bool AuthorizeAccess(AuthorizationHandlerContext context)
+        {
+            return context.User.IsInRole("Admin") && context.User.HasClaim(claim => claim.Type == "Edit Role" && claim.Value == "true")
+                    || context.User.IsInRole("Super Admin");
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
