@@ -60,6 +60,7 @@ namespace EmployeeManagement
             services.AddScoped<IEmployeeRepository, SQLEmployeeRepository>();
 
             services.AddSingleton<IAuthorizationHandler, CanEditOnlyOtherAdminRolesAndClaimsHandler>();
+            services.AddSingleton<IAuthorizationHandler, SuperAdminHandler>();
         }
 
         private bool AuthorizeAccess(AuthorizationHandlerContext context)
