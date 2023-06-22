@@ -53,8 +53,8 @@ namespace EmployeeManagement
                 //options.AddPolicy("EditRolePolicy", policy => policy.RequireAssertion(context => AuthorizeAccess(context)));
                 options.AddPolicy("EditRolePolicy", policy => policy.AddRequirements(new ManageAdminRolesAndClaimsRequirement()));
 
-                options.InvokeHandlersAfterFailure = false;
-                
+                options.InvokeHandlersAfterFailure = true;
+
                 options.AddPolicy("AdminRolePolicy", policy => policy.RequireRole("Admin"));
             });
 

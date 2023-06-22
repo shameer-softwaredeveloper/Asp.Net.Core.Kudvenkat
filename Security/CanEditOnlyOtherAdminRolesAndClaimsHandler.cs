@@ -26,10 +26,10 @@ namespace EmployeeManagement.Security
             {
                 context.Succeed(requirement);
             }
-            else
-            {
-                context.Fail();
-            }
+            // else
+            // {
+            //     context.Fail();
+            // }
 
             return Task.CompletedTask;
         }
