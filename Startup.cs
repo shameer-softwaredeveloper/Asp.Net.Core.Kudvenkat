@@ -65,11 +65,11 @@ namespace EmployeeManagement
             services.AddSingleton<IAuthorizationHandler, SuperAdminHandler>();
         }
 
-        private bool AuthorizeAccess(AuthorizationHandlerContext context)
-        {
-            return context.User.IsInRole("Admin") && context.User.HasClaim(claim => claim.Type == "Edit Role" && claim.Value == "true")
-                    || context.User.IsInRole("Super Admin");
-        }
+        // private bool AuthorizeAccess(AuthorizationHandlerContext context)
+        // {
+        //     return context.User.IsInRole("Admin") && context.User.HasClaim(claim => claim.Type == "Edit Role" && claim.Value == "true")
+        //             || context.User.IsInRole("Super Admin");
+        // }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
