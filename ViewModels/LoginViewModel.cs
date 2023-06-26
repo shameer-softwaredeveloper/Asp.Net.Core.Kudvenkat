@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeManagement.ViewModels
@@ -15,5 +17,9 @@ namespace EmployeeManagement.ViewModels
         // IsPersistent Cookie. Checkbox
         [Display(Name = "Remember me")]
         public bool RememberMe {get; set;}
+
+        public string ReturnUrl { get; set; }
+
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }
     }
 }
