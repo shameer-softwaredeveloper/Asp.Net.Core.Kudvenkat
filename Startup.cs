@@ -45,6 +45,7 @@ namespace EmployeeManagement
             {
                 options.ClientId = "841204992169-mcbaug632ksujad8t970v5ti4c3gulfu.apps.googleusercontent.com";
                 options.ClientSecret = "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";
+                //options.CallbackPath = "";
             });
 
             services.ConfigureApplicationCookie(options => 
