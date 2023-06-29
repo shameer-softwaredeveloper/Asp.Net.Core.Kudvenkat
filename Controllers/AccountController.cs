@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using EmployeeManagement.Models;
 using EmployeeManagement.ViewModels;
@@ -138,7 +139,42 @@ namespace EmployeeManagement.Controllers
                 return View("Login", loginViewModel);
             }
 
-            return View("Login", loginViewModel);
+            var signInResult = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent : false, bypassTwoFactor : true);
+
+            if(signInResult.Succeeded)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+
+                if(email != null)
+                {
+                    var user = await userManager.FindByEmailAsync(email);
+
+                    if(user == null)
+                    {
+                        user = new ApplicationUser 
+                        {
+                            UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
+                            Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        };
+
+                        await userManager.CreateAsync(user);
+                    }
+
+                    await userManager.AddLoginAsync(user, info);
+                    await signInManager.SignInAsync(user, isPersistent: false);
+
+                    return LocalRedirect(returnUrl);
+                }
+
+                ViewBag.ErrorTitle = $"Email claim not received from: {info.LoginProvider}";
+                ViewBag.ErrorMessage = "Please contact support on Admin@gmail.com";
+
+                return View("Error");
+            }
         }
 
         [HttpPost]
