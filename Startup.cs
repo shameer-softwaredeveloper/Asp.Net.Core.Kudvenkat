@@ -41,12 +41,18 @@ namespace EmployeeManagement
                 options.Filters.Add(new AuthorizeFilter(policy));
                 }).AddXmlSerializerFormatters();
 
-            services.AddAuthentication().AddGoogle(options =>
-            {
-                options.ClientId = "841204992169-mcbaug632ksujad8t970v5ti4c3gulfu.apps.googleusercontent.com";
-                options.ClientSecret = "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";
-                //options.CallbackPath = "";
-            });
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "841204992169-mcbaug632ksujad8t970v5ti4c3gulfu.apps.googleusercontent.com";
+                    options.ClientSecret = "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";
+                    //options.CallbackPath = "";
+                })
+                .AddFacebook(options =>
+                {
+                    options.AppId = "582139274104563";
+                    options.AppSecret = "b3cfaa2a465ce7bfb031c9f682c4e975";
+                });
 
             services.ConfigureApplicationCookie(options => 
             {
