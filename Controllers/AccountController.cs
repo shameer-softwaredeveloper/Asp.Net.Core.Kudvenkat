@@ -68,8 +68,6 @@ namespace EmployeeManagement.Controllers
                     {
                         return RedirectToAction("ListUsers", "Administration");
                     }
-                    //await signInManager.SignInAsync(user, isPersistent: false);
-                    //return RedirectToAction("index", "home");
 
                     ViewBag.ErrorTitle = "Registration successful";
                     ViewBag.ErrorMessage = "Before you can Login, please confirm your " + "email, by clicking on the confirmation link we have emailed you";
@@ -83,6 +81,8 @@ namespace EmployeeManagement.Controllers
             }
             return View(model);
         }
+
+
 
         [HttpGet]
         [AllowAnonymous]
