@@ -149,6 +149,20 @@ namespace EmployeeManagement.Controllers
                 return View("Login", loginViewModel);
             }
 
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            ApplicationUser user = null;
+
+            if(email != null)
+            {
+                user = await userManager.FindByEmailAsync(email);
+
+                if(user != null && !user.EmailConfirmed)
+                {
+                    ModelState.AddModelError(string.Empty, "Email not confirmed yet");
+                    return View("Login", loginViewModel);
+                }
+            }
+
             var signInResult = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent : false, bypassTwoFactor : true);
 
             if(signInResult.Succeeded)
@@ -157,12 +171,8 @@ namespace EmployeeManagement.Controllers
             }
             else
             {
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-
                 if(email != null)
                 {
-                    var user = await userManager.FindByEmailAsync(email);
-
                     if(user == null)
                     {
                         user = new ApplicationUser 
