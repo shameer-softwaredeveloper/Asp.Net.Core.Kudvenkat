@@ -25,6 +25,17 @@ namespace EmployeeManagement.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        public IActionResult ResetPassword(string token, string email)
+        {
+            if(token == null || email == null)
+            {
+                ModelState.AddModelError("", "Invalid password reset token");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
             return View();
