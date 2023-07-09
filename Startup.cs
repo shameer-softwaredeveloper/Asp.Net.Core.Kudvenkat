@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using EmployeeManagement.Security;
+using System;
 
 namespace EmployeeManagement
 {
@@ -37,6 +38,8 @@ namespace EmployeeManagement
             })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = TimeSpan.FromHours(5));
 
             services.AddMvc(options => {
                 options.EnableEndpointRouting = false;
