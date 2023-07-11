@@ -6,6 +6,8 @@ using System.IO;
 using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
+using EmployeeManagement.Security;
 
 namespace EmployeeManagement.Controllers
 {
@@ -15,13 +17,17 @@ namespace EmployeeManagement.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IHostingEnvironment hostingEnvironment;
         private readonly ILogger logger;
+        private readonly IDataProtector protector;
         public HomeController(IEmployeeRepository employeeRepository, 
                             IHostingEnvironment hostingEnvironment,
-                            ILogger<HomeController> logger)
+                            ILogger<HomeController> logger,
+                            IDataProtectionProvider dataProtectionProvider,
+                            DataProtectionPurposeStrings dataProtectionPurposeStrIngs)
         {
             _employeeRepository = employeeRepository;
             this.hostingEnvironment = hostingEnvironment;
             this.logger = logger;
+            protector = dataProtectionProvider.CreateProtector(dataProtectionPurposeStrIngs.EmployeeIdRouteValue);
         }
 
         [AllowAnonymous]
