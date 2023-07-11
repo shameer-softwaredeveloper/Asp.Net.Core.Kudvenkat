@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using EmployeeManagement.Security;
+using System.Linq;
 
 namespace EmployeeManagement.Controllers
 {
@@ -22,18 +23,23 @@ namespace EmployeeManagement.Controllers
                             IHostingEnvironment hostingEnvironment,
                             ILogger<HomeController> logger,
                             IDataProtectionProvider dataProtectionProvider,
-                            DataProtectionPurposeStrings dataProtectionPurposeStrIngs)
+                            DataProtectionPurposeStrings dataProtectionPurposeStrings)
         {
             _employeeRepository = employeeRepository;
             this.hostingEnvironment = hostingEnvironment;
             this.logger = logger;
-            protector = dataProtectionProvider.CreateProtector(dataProtectionPurposeStrIngs.EmployeeIdRouteValue);
+            protector = dataProtectionProvider.CreateProtector(dataProtectionPurposeStrings.EmployeeIdRouteValue);
         }
 
         [AllowAnonymous]
         public ViewResult Index()
         {
-            var model = _employeeRepository.GetAllEmployee();
+            var model = _employeeRepository.GetAllEmployee()
+                            .Select(e => 
+                            {
+                                e.EncryptedId = protector.Protect(e.Id.ToString());
+                                return e;
+                            });
             return View(model);
         }
 
