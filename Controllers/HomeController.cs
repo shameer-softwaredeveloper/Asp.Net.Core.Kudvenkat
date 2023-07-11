@@ -44,7 +44,7 @@ namespace EmployeeManagement.Controllers
         }
 
         [AllowAnonymous]
-        public ViewResult Details(int? id)
+        public ViewResult Details(string id)
         {
             //throw new Exception("Error in Details View");
 
@@ -54,13 +54,15 @@ namespace EmployeeManagement.Controllers
             logger.LogWarning("Warning Log");
             logger.LogError("Error Log");
             logger.LogCritical("Critical Log");
+
+            int decryptedId = Convert.ToInt32(protector.Unprotect(id));
             
-            Employee employee = _employeeRepository.GetEmployee(id.Value);
+            Employee employee = _employeeRepository.GetEmployee(decryptedId);
 
             if(employee == null) 
             {
                 Response.StatusCode = 404;
-                return View("EmployeeNotFound", id.Value);
+                return View("EmployeeNotFound", decryptedId);
             }
 
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
